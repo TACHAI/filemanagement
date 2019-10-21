@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: chaoxing@qq.com
+#    password: root
+    url: jdbc:mysql://localhost:3306/cultural_gallery?serverTimezone=GMT%2B8&characterEncoding=UTF-8
+#    url: jdbc:mysql://127.0.0.1:3306/cultural_gallery?serverTimezone=GMT%2B8&characterEncoding=UTF-8
+    dbcp2:
+      initial-size: 20
+      min-evictable-idle-time-millis: 3600000
+      default-auto-commit: true
+    tomcat:
+      max-active: 50
+    jpa:
+      show-sql: true
+    jackson:
+      default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+server:
+  servlet:
+    context-path: /
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+## path: /var/log/tomcat/
+#  file: /var/log/tomcat/sell.log
+##  level:
+#  level: debug
+
+logging:
+  file: /mnt/log/
+  level:
+    package com.chaoxing.dao: info
+#原数据配置文件
+mybatis:
+  typeAliasesPackage: com.chaoxing.po
+  mapper-locations: classpath:mappers/*.xml
+
