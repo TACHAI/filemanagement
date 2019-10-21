@@ -2,10 +2,9 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: chaoxing@qq.com
-#    password: chaoxing
-    url: jdbc:mysql://120.131.6.144:3306/cultural_gallery?serverTimezone=GMT%2B8&characterEncoding=UTF-8
-#    url: jdbc:mysql://127.0.0.1:3306/cultural_gallery?serverTimezone=GMT%2B8&characterEncoding=UTF-8
+#    password: chaoxing@qq.com
+    password: hzc778209
+    url: jdbc:mysql://127.0.0.1:3306/filemanagement?serverTimezone=GMT%2B8&characterEncoding=UTF-8
     dbcp2:
       initial-size: 20
       min-evictable-idle-time-millis: 3600000
