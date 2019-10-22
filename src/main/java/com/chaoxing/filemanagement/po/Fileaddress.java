@@ -15,6 +15,8 @@ public class Fileaddress {
 
     private Date insertTime;
 
+    private Integer deptId;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class Fileaddress {
 
     public void setInsertTime(Date insertTime) {
         this.insertTime = insertTime;
+    }
+
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
     }
 }

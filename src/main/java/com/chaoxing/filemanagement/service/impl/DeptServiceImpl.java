@@ -7,6 +7,7 @@ import com.chaoxing.filemanagement.po.Dept;
 import com.chaoxing.filemanagement.service.DeptService;
 import com.sun.org.apache.xpath.internal.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * gitHub https://github.com/TACHAI
  * Email tc1206966083@gmail.com
  */
+@Service("DeptServiceImpl")
 public class DeptServiceImpl implements DeptService {
 
     @Autowired

@@ -2,6 +2,8 @@ package com.chaoxing.filemanagement.dao;
 
 import com.chaoxing.filemanagement.po.Fileaddress;
 
+import java.util.List;
+
 public interface FileaddressMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,8 @@ public interface FileaddressMapper {
     int updateByPrimaryKeySelective(Fileaddress record);
 
     int updateByPrimaryKey(Fileaddress record);
+
+    List<Fileaddress> selectByDeptId(Integer id);
+
+    List<Fileaddress> selectList();
 }
