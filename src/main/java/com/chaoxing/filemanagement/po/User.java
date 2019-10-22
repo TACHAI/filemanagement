@@ -15,6 +15,8 @@ public class User {
 
     private Integer deptId;
 
+    private String email;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class User {
 
     public void setDeptId(Integer deptId) {
         this.deptId = deptId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
     }
 }

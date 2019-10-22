@@ -1,6 +1,9 @@
 package com.chaoxing.filemanagement.dao;
 
 import com.chaoxing.filemanagement.po.User;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,10 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    int selectByEmail(String email);
+
+    User login(@Param("email")String email, @Param("password")String password);
+
+    List<User> selectByDeptId(@Param("deptId")Integer deptId);
 }

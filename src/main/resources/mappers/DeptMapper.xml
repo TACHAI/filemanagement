@@ -68,4 +68,9 @@
       parent_id = #{parentId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="map">
+    select <include refid="Base_Column_List"/>
+    from t_dept
+    where parent_id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

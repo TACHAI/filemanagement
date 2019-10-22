@@ -66,6 +66,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+        </dependency>
         <!--		在线接口文档-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -84,12 +89,7 @@
             <version>2.10.2</version>
         </dependency>
 
-        <!--		json工具类-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.45</version>
-        </dependency>
+
         <!-- 分页工具-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>

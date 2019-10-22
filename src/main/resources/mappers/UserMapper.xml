@@ -8,12 +8,13 @@
     <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
     <result column="dept_id" property="deptId" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, password, insert_time, is_delete, dept_id
+    id, name, password, insert_time, is_delete, dept_id, email
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_user
     where id = #{id,jdbcType=INTEGER}
@@ -24,11 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.chaoxing.filemanagement.po.User" >
     insert into t_user (id, name, password, 
-      insert_time, is_delete, dept_id
-      )
+      insert_time, is_delete, dept_id, 
+      email)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{insertTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}
-      )
+      #{insertTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chaoxing.filemanagement.po.User" >
     insert into t_user
@@ -51,6 +52,9 @@
       <if test="deptId != null" >
         dept_id,
       </if>
+      <if test="email != null" >
+        email,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -70,6 +74,9 @@
       </if>
       <if test="deptId != null" >
         #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="deptId != null" >
         dept_id = #{deptId,jdbcType=INTEGER},
       </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -100,7 +110,24 @@
       password = #{password,jdbcType=VARCHAR},
       insert_time = #{insertTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=INTEGER},
-      dept_id = #{deptId,jdbcType=INTEGER}
+      dept_id = #{deptId,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="map">
+    select <include refid="Base_Column_List"/>
+    from t_user
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+  <select id="login" resultMap="BaseResultMap" parameterType="map">
+      select <include refid="Base_Column_List"/>
+      from t_user
+      where email = #{email,jdbcType=VARCHAR}
+      and password = #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByDeptId" parameterType="map" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+      from t_user
+      where dept_id== #{deptId,jdbcType=INTEGER
+  </select>
 </mapper>
