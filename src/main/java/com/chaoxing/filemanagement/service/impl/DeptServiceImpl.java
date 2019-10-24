@@ -23,7 +23,7 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public ServerResponse<String> addDept(Dept dept) {
-        int res = deptDao.updateByPrimaryKeySelective(dept);
+        int res = deptDao.insert(dept);
         if(res>0){
             return ServerResponse.createBySuccessMessage(ResponseString.ADD_SUCCESS);
         }

@@ -24,4 +24,6 @@ public interface UserService {
     ServerResponse<UserVO> login(String email, String password);
     // 组织查询
     ServerResponse<List<User>> listUserByDeptId(Integer deptId);
+
+    UserVO  selectUserVO(Integer id);
 }

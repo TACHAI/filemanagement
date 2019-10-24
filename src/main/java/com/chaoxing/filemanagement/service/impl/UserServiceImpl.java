@@ -2,7 +2,9 @@ package com.chaoxing.filemanagement.service.impl;
 
 import com.chaoxing.filemanagement.common.ResponseString;
 import com.chaoxing.filemanagement.common.ServerResponse;
+import com.chaoxing.filemanagement.dao.PermissionsMapper;
 import com.chaoxing.filemanagement.dao.UserMapper;
+import com.chaoxing.filemanagement.po.Permissions;
 import com.chaoxing.filemanagement.po.User;
 import com.chaoxing.filemanagement.service.UserService;
 import com.chaoxing.filemanagement.util.JWTUtil;
@@ -26,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userDao;
+    @Autowired
+    private PermissionsMapper permissionDao;
 
 
 
@@ -75,8 +79,9 @@ public class UserServiceImpl implements UserService {
             return ServerResponse.createByErrorMessage("未找到该用户，用户名或密码错误");
         }
 
+        String token = JWTUtil.sign(user.getName(),user.getPassword(),user.getId());
         user.setPassword(StringUtils.EMPTY);
-        String token = JWTUtil.sign(user.getName(),MD5Util.MD5(user.getEmail()),user.getId());
+
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user,userVO);
         userVO.setToken(token);
@@ -88,6 +93,20 @@ public class UserServiceImpl implements UserService {
     public ServerResponse<List<User>> listUserByDeptId(Integer deptId) {
         List<User> list = userDao.selectByDeptId(deptId);
         return ServerResponse.createBySuccess(list,ResponseString.SELECT_SUCCESS);
+    }
+
+    @Override
+    public UserVO selectUserVO(Integer id) {
+        User user = userDao.selectByPrimaryKey(id);
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user,userVO);
+        List<Permissions> list= permissionDao.selectByDeptId(user.getDeptId());
+        StringBuffer buffer = new StringBuffer();
+        for(int i=0;i<list.size();i++){
+            buffer.append(list.get(i).getPermission()).append(";");
+        }
+        userVO.setPermission(buffer.toString());
+        return userVO;
     }
 
 

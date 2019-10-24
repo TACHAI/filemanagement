@@ -20,12 +20,14 @@ public class JWTUtil {
      * @param secret 用户的密码
      * @return 是否正确
      */
-    public static boolean verify(String token, String username, String secret) {
+    public static boolean verify(String token, String secret) {
+
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withClaim("username", username)
-                    .build();
+            JWTVerifier verifier = JWT.require(algorithm).build();
+                    //.withClaim("username", username)
+                   // .withClaim("user_id", id)
+                   // .build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (Exception exception) {

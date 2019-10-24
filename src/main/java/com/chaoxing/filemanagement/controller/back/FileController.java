@@ -8,6 +8,8 @@ import com.chaoxing.filemanagement.vo.PageVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,12 +41,14 @@ public class FileController {
         return null;
     }
 
-
+    @RequiresAuthentication
+    @RequiresPermissions({"file:addFile"})
     @PostMapping("addFile")
     public ServerResponse<String> addFile(Fileaddress fileaddress){
         return fileService.addFile(fileaddress);
     }
 
+    @RequiresPermissions({"file:deleteFile"})
     @PostMapping("deleteFile")
     public ServerResponse<String> deleteFile(Integer id){
         return fileService.deleteById(id);
