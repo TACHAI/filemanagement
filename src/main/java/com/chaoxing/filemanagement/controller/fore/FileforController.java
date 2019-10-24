@@ -1,4 +1,4 @@
-package com.chaoxing.filemanagement.controller.back;
+package com.chaoxing.filemanagement.controller.fore;
 
 import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.po.Fileaddress;
@@ -14,21 +14,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Create by tachai on 2019-10-22 14:14
+ * Create by tachai on 2019-10-23 13:44
  * gitHub https://github.com/TACHAI
  * Email tc1206966083@gmail.com
  */
-@RestController("backFileController")
-@RequestMapping("/back/file/")
-@Api(value = "后台文件查询")
-public class FileController {
+@RestController("foreFileController")
+@RequestMapping("/fore/file/")
+@Api(value = "前台文件查询")
+public class FileforController {
+
     @Autowired
     private FileService fileService;
 
     @GetMapping("selectList")
-    public PageVO selectList(@RequestParam(value = "pageSize",defaultValue = "25")int pageSize, @RequestParam(value = "pageNumber",defaultValue = "1")int pageNumber){
+    public PageVO selectList(String id,@RequestParam(value = "pageSize",defaultValue = "25")int pageSize, @RequestParam(value = "pageNumber",defaultValue = "1")int pageNumber){
         Page page = PageHelper.startPage(pageNumber,pageSize);
-        List<FileVO> list =  fileService.selectList().getData();
+        List<FileVO> list =  fileService.selectByDeptId(Integer.parseInt(id.toString())).getData();
         if(list !=null){
             Long total = page.getTotal();
             PageVO p =new PageVO();
@@ -39,20 +40,8 @@ public class FileController {
         return null;
     }
 
-
     @PostMapping("addFile")
     public ServerResponse<String> addFile(Fileaddress fileaddress){
         return fileService.addFile(fileaddress);
-    }
-
-    @PostMapping("deleteFile")
-    public ServerResponse<String> deleteFile(Integer id){
-        return fileService.deleteById(id);
-    }
-
-
-    @PostMapping("updateFile")
-    public ServerResponse<String> updatefile(Fileaddress fileaddress){
-        return fileService.updateFile(fileaddress);
     }
 }

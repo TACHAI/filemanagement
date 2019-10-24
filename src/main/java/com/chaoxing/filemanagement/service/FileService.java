@@ -2,7 +2,7 @@ package com.chaoxing.filemanagement.service;
 
 import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.po.Fileaddress;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.chaoxing.filemanagement.vo.FileVO;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface FileService {
 
     ServerResponse<Fileaddress> selectById(Integer id);
 
-    ServerResponse<List<Fileaddress>> selectByDeptId(Integer Id);
+    ServerResponse<List<FileVO>> selectByDeptId(Integer Id);
 
-    ServerResponse<List<Fileaddress>> selectList();
+    ServerResponse<List<FileVO>> selectList();
 }

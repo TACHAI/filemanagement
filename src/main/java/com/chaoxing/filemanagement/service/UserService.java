@@ -2,6 +2,7 @@ package com.chaoxing.filemanagement.service;
 
 import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.po.User;
+import com.chaoxing.filemanagement.vo.UserVO;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface UserService {
     // 查询用户
     ServerResponse<User> selectById(Integer id);
     // 登录
-    ServerResponse<User> login(String email,String password);
+    ServerResponse<UserVO> login(String email, String password);
     // 组织查询
     ServerResponse<List<User>> listUserByDeptId(Integer deptId);
 }

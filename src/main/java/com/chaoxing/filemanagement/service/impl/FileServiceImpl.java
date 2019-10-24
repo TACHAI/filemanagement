@@ -2,13 +2,17 @@ package com.chaoxing.filemanagement.service.impl;
 
 import com.chaoxing.filemanagement.common.ResponseString;
 import com.chaoxing.filemanagement.common.ServerResponse;
+import com.chaoxing.filemanagement.dao.DeptMapper;
 import com.chaoxing.filemanagement.dao.FileaddressMapper;
+import com.chaoxing.filemanagement.po.Dept;
 import com.chaoxing.filemanagement.po.Fileaddress;
 import com.chaoxing.filemanagement.service.FileService;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.chaoxing.filemanagement.vo.FileVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +23,13 @@ import java.util.List;
  */
 @Service("FileServiceImpl")
 public class FileServiceImpl implements FileService {
+
+    private String temp;
+
     @Autowired
     private FileaddressMapper fileDao;
+    @Autowired
+    private DeptMapper deptDao;
     
     @Override
     public ServerResponse<String> addFile(Fileaddress fileaddress) {
@@ -63,13 +72,56 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public ServerResponse<List<Fileaddress>> selectByDeptId(Integer id) {
-        List<Fileaddress> list = fileDao.selectByDeptId(id);
-        return ServerResponse.createBySuccess(list,ResponseString.SELECT_SUCCESS);
+    public ServerResponse<List<FileVO>> selectByDeptId(Integer id) {
+
+        String [] temps = temp.split(",");
+        List<FileVO> fileVOS = new ArrayList<>();
+        FileVO vo=null;
+        for(int i=0;i<temps.length;i++){
+            List<Fileaddress> list = fileDao.selectByDeptId(Integer.parseInt(temps[i]));
+
+            for(int j=0;i<list.size();j++){
+                vo =new FileVO();
+                BeanUtils.copyProperties(list.get(j),vo);
+                vo.setDeptName(deptDao.selectByPrimaryKey(list.get(i).getDeptId()).getName());
+                fileVOS.add(vo);
+            }
+
+        }
+        return ServerResponse.createBySuccess(fileVOS,ResponseString.SELECT_SUCCESS);
     }
 
     @Override
-    public ServerResponse<List<Fileaddress>> selectList() {
+    public ServerResponse<List<FileVO>> selectList() {
+        List<FileVO> fileVOS = new ArrayList<>();
         List<Fileaddress> list = fileDao.selectList();
-        return ServerResponse.createBySuccess(list,ResponseString.SELECT_SUCCESS);    }
+        FileVO fileVO =null;
+        for(int i=0;i<list.size();i++){
+            fileVO = new FileVO();
+            BeanUtils.copyProperties(list.get(i),fileVO);
+            fileVO.setDeptName(deptDao.selectByPrimaryKey(list.get(i).getDeptId()).getName());
+            fileVOS.add(fileVO);
+        }
+        return ServerResponse.createBySuccess(fileVOS,ResponseString.SELECT_SUCCESS);
+    }
+
+
+    // 递归查找
+    private void getDept(Integer id){
+        temp =id+",";
+
+        List<Dept> list = deptDao.selectByParentId(id);
+        if(list.size()>0){
+            for (int i=0;i<list.size();i++){
+                getDept(list.get(i).getId());
+            }
+
+        }else {
+            return ;
+        }
+    }
+
+
+
+
 }

@@ -73,4 +73,9 @@
     from t_dept
     where parent_id = #{id,jdbcType=INTEGER},
   </select>
+  <select id="selectByParentId" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_dept
+    where parent_id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

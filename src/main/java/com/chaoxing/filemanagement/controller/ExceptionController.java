@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class ExceptionController {
 
     // 捕捉shiro的异常

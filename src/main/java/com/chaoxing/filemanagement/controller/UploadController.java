@@ -4,6 +4,7 @@ import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.common.cons.FileType;
 import com.chaoxing.filemanagement.util.FileUtil;
 import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,14 @@ import java.util.Map;
 @Api(value = "UploadController|上传模块")
 public class UploadController {
 
+    @RequiresAuthentication
     @PostMapping(value = "uploadImage", produces = { "application/json;charset=UTF-8" })
     public ServerResponse<String> uploadImage(@RequestParam("file") MultipartFile file, String name) throws IOException {
         System.out.println(name);
         return FileUtil.uploadFile(file, FileType.Image,"");
     }
 
+    @RequiresAuthentication
     @PostMapping(value = "uploadImageByFormDate")
     public ServerResponse<Map> uploadImageByFormDate(HttpServletRequest request, HttpRequest request1)throws IOException{
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
@@ -47,16 +50,21 @@ public class UploadController {
         }
         return ServerResponse.createBySuccess(map);
     }
+
+    @RequiresAuthentication
     @PostMapping(value = "uploadBook", produces = { "application/json;charset=UTF-8" })
     public ServerResponse<String> uploadBook(@RequestParam("file") MultipartFile file) throws IOException {
         return FileUtil.uploadFile(file, FileType.Book,"");
     }
 
+
+    @RequiresAuthentication
     @PostMapping(value = "uploadVideo", produces = { "application/json;charset=UTF-8" })
     public ServerResponse<String> uploadVideo(@RequestParam("file") MultipartFile file) throws IOException {
         return FileUtil.uploadFile(file, FileType.Video,"");
     }
 
+    @RequiresAuthentication
     @PostMapping(value = "uploadFile", produces = { "application/json;charset=UTF-8" })
     public ServerResponse<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         return FileUtil.uploadFile(file, FileType.File,"");

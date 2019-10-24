@@ -48,6 +48,7 @@ public class MD5Util {
         //85ADA72802DE970FDD43E68D29A85A80
         //密码38C3350484E7431798AB8657C6B0A280
         String pwd = "chaoxing";
+        //AB2385DD1F310B9C2995687B10162B73
         String pwd2 = MD5Util.MD5(pwd);
 
         System.out.println(pwd2);

@@ -5,7 +5,6 @@ import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.dao.DeptMapper;
 import com.chaoxing.filemanagement.po.Dept;
 import com.chaoxing.filemanagement.service.DeptService;
-import com.sun.org.apache.xpath.internal.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +49,13 @@ public class DeptServiceImpl implements DeptService {
         return ServerResponse.createByErrorMessage(ResponseString.UPDATE_FAIL);
     }
 
+    // 这是userId
     @Override
     public ServerResponse<Dept> selectDeptById(Integer id) {
+
+
+
+
         Dept dept=deptDao.selectByPrimaryKey(id);
         if(dept!=null){
             return ServerResponse.createBySuccess(dept,ResponseString.SELECT_SUCCESS);
@@ -65,4 +69,7 @@ public class DeptServiceImpl implements DeptService {
 
         return null;
     }
+
+
+
 }
