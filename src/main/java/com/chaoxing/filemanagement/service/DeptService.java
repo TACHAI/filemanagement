@@ -2,6 +2,7 @@ package com.chaoxing.filemanagement.service;
 
 import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.po.Dept;
+import com.chaoxing.filemanagement.vo.DeptVO;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface DeptService {
     ServerResponse<Dept> selectDeptById(Integer id);
     // 根据parentId 查询list
     ServerResponse<List<Dept>> listDept(Integer id);
+
+    ServerResponse<DeptVO> slecetDeptVOByDeptId(Integer id);
 }

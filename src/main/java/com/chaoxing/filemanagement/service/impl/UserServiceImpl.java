@@ -85,12 +85,11 @@ public class UserServiceImpl implements UserService {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user,userVO);
 
-        List<Permissions> permissions = permissionDao.selectByDeptId(user.getDeptId());
-        StringBuffer permission=null;
-
-        permissions.forEach(e->{
-            permission.append(e.getPermission());
-        });
+        List<Permissions> list = permissionDao.selectByDeptId(user.getDeptId());
+        StringBuffer permission=new StringBuffer();
+        for(int i=0;i<list.size();i++){
+            permission.append(list.get(i).getPermission());
+        }
         userVO.setPermission(permission.toString());
 
         userVO.setToken(token);

@@ -3,15 +3,20 @@ package com.chaoxing.filemanagement.controller;
 import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.po.User;
 import com.chaoxing.filemanagement.service.UserService;
+import com.chaoxing.filemanagement.util.JWTUtil;
 import com.chaoxing.filemanagement.vo.UserVO;
 import io.swagger.annotations.Api;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -53,4 +58,18 @@ public class LoginController {
     public ServerResponse<List<User>> list(){
         return null;
     }
+
+    @RequiresAuthentication
+    @GetMapping("exit")
+    public ServerResponse<String>exit(HttpServletRequest request){
+        /*String token = request.getHeader("Authorization");
+        if(token!=null){
+            String userName = JWTUtil.getUsername(token);
+        }*/
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return ServerResponse.createBySuccessMessage("退出成功");
+
+    }
+
 }

@@ -5,9 +5,12 @@ import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.dao.DeptMapper;
 import com.chaoxing.filemanagement.po.Dept;
 import com.chaoxing.filemanagement.service.DeptService;
+import com.chaoxing.filemanagement.vo.DeptVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,6 +73,34 @@ public class DeptServiceImpl implements DeptService {
         return null;
     }
 
+    @Override
+    public ServerResponse<DeptVO> slecetDeptVOByDeptId(Integer id) {
+
+        Dept dept = deptDao.selectByPrimaryKey(id);
+
+        DeptVO deptVO = new DeptVO();
+        BeanUtils.copyProperties(dept,deptVO);
+        getDeptVO(deptVO);
+
+        return ServerResponse.createBySuccess(deptVO);
+    }
 
 
+
+
+    private void getDeptVO(DeptVO deptVO){
+        List<Dept> list = deptDao.selectByParentId(deptVO.getId());
+
+        List<DeptVO> deptVOList = new ArrayList<>();
+
+        deptVO.setDeptVO(deptVOList);
+        if(list.size()>0){
+            for(int i=0;i<list.size();i++){
+                DeptVO deptVO1 = new DeptVO();
+                BeanUtils.copyProperties(list.get(i),deptVO);
+                deptVOList.add(deptVO1);
+                getDeptVO(deptVO1);
+            }
+        }
+    }
 }

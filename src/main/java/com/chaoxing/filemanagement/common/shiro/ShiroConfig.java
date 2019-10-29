@@ -59,6 +59,8 @@ public class ShiroConfig {
         filterRuleMap.put("/401", "anon");
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
+        // 默认退出
+        //filterRuleMap.put("/user/exit","logout");
 
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
