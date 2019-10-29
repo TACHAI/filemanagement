@@ -2,12 +2,10 @@ package com.chaoxing.filemanagement.common.shiro;
 
 import com.chaoxing.filemanagement.service.UserService;
 import com.chaoxing.filemanagement.util.JWTUtil;
-import com.chaoxing.filemanagement.util.MD5Util;
 import com.chaoxing.filemanagement.vo.UserVO;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.Md2Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;

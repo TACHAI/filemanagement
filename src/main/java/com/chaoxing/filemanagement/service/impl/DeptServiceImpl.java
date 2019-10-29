@@ -79,7 +79,8 @@ public class DeptServiceImpl implements DeptService {
         Dept dept = deptDao.selectByPrimaryKey(id);
 
         DeptVO deptVO = new DeptVO();
-        BeanUtils.copyProperties(dept,deptVO);
+        deptVO.setId(dept.getId());
+        deptVO.setDeptName(dept.getName());
         getDeptVO(deptVO);
 
         return ServerResponse.createBySuccess(deptVO);
@@ -91,16 +92,20 @@ public class DeptServiceImpl implements DeptService {
     private void getDeptVO(DeptVO deptVO){
         List<Dept> list = deptDao.selectByParentId(deptVO.getId());
 
+        if(list.size()==0){
+            return;
+        }
         List<DeptVO> deptVOList = new ArrayList<>();
 
-        deptVO.setDeptVO(deptVOList);
         if(list.size()>0){
             for(int i=0;i<list.size();i++){
                 DeptVO deptVO1 = new DeptVO();
-                BeanUtils.copyProperties(list.get(i),deptVO);
+                deptVO1.setId(list.get(i).getId());
+                deptVO1.setDeptName(list.get(i).getName());
                 deptVOList.add(deptVO1);
                 getDeptVO(deptVO1);
             }
+            deptVO.setDeptVO(deptVOList);
         }
     }
 }
