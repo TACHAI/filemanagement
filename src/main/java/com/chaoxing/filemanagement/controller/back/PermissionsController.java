@@ -42,13 +42,13 @@ public class PermissionsController {
     }
 
     @RequiresAuthentication
-    @RequiresPermissions({"permission:add"})
+    @RequiresPermissions({"add"})
     @PostMapping("addPermission")
     public ServerResponse<String> addFile(Permissions permissions){
         return permissionService.addPermission(permissions);
     }
 
-    @RequiresPermissions({"permission:delete"})
+    @RequiresPermissions({"delete"})
     @PostMapping("deletePermission")
     public ServerResponse<String> deleteFile(Integer id){
         return permissionService.deleteById(id);

@@ -68,6 +68,7 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public ServerResponse<List<Dept>> listDept(Integer id) {
+
         List<Dept> list = deptDao.selectList(id);
 
         return null;

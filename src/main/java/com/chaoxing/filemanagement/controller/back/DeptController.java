@@ -42,7 +42,7 @@ public class DeptController {
     }
 
     @RequiresAuthentication
-    @GetMapping("selectDept")
+    @GetMapping("selectDeptByUser")
     public ServerResponse<DeptVO> select(HttpServletRequest request){
 
         String token = request.getHeader("Authorization");
@@ -50,6 +50,13 @@ public class DeptController {
 
         User user= userDao.selectByPrimaryKey(id);
         return deptService.slecetDeptVOByDeptId(user.getDeptId());
+    }
+
+    @RequiresAuthentication
+    @GetMapping("selectDeptDeptId")
+    public ServerResponse<List<Dept>> select(Integer deptId){
+
+      return deptService.listDept(deptId);
     }
 
 }
