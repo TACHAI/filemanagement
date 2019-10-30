@@ -33,7 +33,7 @@ public class LoginController {
 
 
     @GetMapping("selectList")
-    public PageVO selectList(String id, @RequestParam(value = "pageSize",defaultValue = "25")int pageSize, @RequestParam(value = "pageNumber",defaultValue = "1")int pageNumber){
+    public PageVO selectList(@RequestParam(value = "pageSize",defaultValue = "25")int pageSize, @RequestParam(value = "pageNumber",defaultValue = "1")int pageNumber){
         Page page = PageHelper.startPage(pageNumber,pageSize);
         List<UserVO> list =  userService.listUser().getData();
         if(list !=null){
