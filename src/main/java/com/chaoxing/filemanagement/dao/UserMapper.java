@@ -19,9 +19,10 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    int selectByEmail(String email);
+    int selectByEmail(@Param("email")String email);
 
-    User login(@Param("email")String email, @Param("password")String password);
+    User login(@Param("email")String email,@Param("password") String password);
 
-    List<User> selectByDeptId(@Param("deptId")Integer deptId);
+    List<User> selectByDeptId (@Param("deptId")Integer deptId);
+
 }

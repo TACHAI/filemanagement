@@ -17,6 +17,8 @@ public class User {
 
     private String email;
 
+    private String menus;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getMenus() {
+        return menus;
+    }
+
+    public void setMenus(String menus) {
+        this.menus = menus == null ? null : menus.trim();
     }
 }

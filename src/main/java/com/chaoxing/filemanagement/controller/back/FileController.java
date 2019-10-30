@@ -42,13 +42,13 @@ public class FileController {
     }
 
     @RequiresAuthentication
-    @RequiresPermissions({"add"})
+    @RequiresPermissions({"file:add"})
     @PostMapping("addFile")
     public ServerResponse<String> addFile(Fileaddress fileaddress){
         return fileService.addFile(fileaddress);
     }
 
-    @RequiresPermissions({"delete"})
+    @RequiresPermissions({"file:delete"})
     @PostMapping("deleteFile")
     public ServerResponse<String> deleteFile(Integer id){
         return fileService.deleteById(id);
