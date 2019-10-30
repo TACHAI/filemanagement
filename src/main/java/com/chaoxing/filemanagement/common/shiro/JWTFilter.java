@@ -1,5 +1,9 @@
 package com.chaoxing.filemanagement.common.shiro;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +15,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
@@ -31,7 +38,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      *
      */
     @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws AuthenticationException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String authorization = httpServletRequest.getHeader("Authorization");
 
@@ -57,6 +64,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             try {
                 executeLogin(request, response);
             } catch (Exception e) {
+                //log.info("isAccessAllowed:{}",e.getMessage());
                 response401(request, response);
             }
         }
@@ -82,13 +90,26 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 将非法请求跳转到 /401   登录页面
+     * 将非法请求 返回json
+     *
      */
     private void response401(ServletRequest req, ServletResponse resp) {
+
+        // 注意 PrintWriter 要手动关闭掉
         try {
+            resp.reset();
             HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-            httpServletResponse.sendRedirect("/admin/index.html");
-        } catch (IOException e) {
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            httpServletResponse.setContentType("application/json; charset=utf-8");
+            PrintWriter out = httpServletResponse.getWriter();
+            Gson res = new Gson();
+            Map<String, Object> map = new HashMap<>();
+            map.put("status",1);
+            map.put("msg","token验证失效");
+            out.append(res.toJson(map));
+            out.flush();
+            out.close();
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
     }
