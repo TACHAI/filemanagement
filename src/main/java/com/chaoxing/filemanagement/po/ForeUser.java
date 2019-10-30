@@ -13,7 +13,7 @@ public class ForeUser {
 
     private Integer deptId;
 
-    private String isDelete;
+    private Integer isDelete;
 
     private Date insertTime;
 
@@ -57,12 +57,12 @@ public class ForeUser {
         this.deptId = deptId;
     }
 
-    public String getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete == null ? null : isDelete.trim();
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete ;
     }
 
     public Date getInsertTime() {

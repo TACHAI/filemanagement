@@ -25,4 +25,7 @@ public interface UserMapper {
 
     List<User> selectByDeptId (@Param("deptId")Integer deptId);
 
+    // 查询所有的用户
+    List<User> listUser();
+
 }

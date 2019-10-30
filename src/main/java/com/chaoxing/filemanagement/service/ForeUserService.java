@@ -1,6 +1,7 @@
 package com.chaoxing.filemanagement.service;
 
 import com.chaoxing.filemanagement.common.ServerResponse;
+import com.chaoxing.filemanagement.po.ForeUser;
 import com.chaoxing.filemanagement.po.User;
 import com.chaoxing.filemanagement.vo.UserVO;
 
@@ -11,21 +12,20 @@ import java.util.List;
  * gitHub https://github.com/TACHAI
  * Email tc1206966083@gmail.com
  */
-public interface UserService {
+public interface ForeUserService {
     // 添加用户
-    ServerResponse<String> addUser(User user);
+    ServerResponse<String> addUser(ForeUser user);
     // 删除用户
-    ServerResponse<String> deleteById(Integer  id);
+    ServerResponse<String> deleteById(Integer id);
     // 修改用户
-    ServerResponse<String> updateUser(User user);
+    ServerResponse<String> updateUser(ForeUser user);
     // 查询用户
-    ServerResponse<User> selectById(Integer id);
+    ServerResponse<ForeUser> selectById(Integer id);
     // 登录
     ServerResponse<UserVO> login(String email, String password);
     // 组织查询
-    ServerResponse<List<User>> listUserByDeptId(Integer deptId);
+    ServerResponse<List<ForeUser>> listUserByDeptId(Integer deptId);
 
-    UserVO  selectUserVO(Integer id);
 
     ServerResponse<List<UserVO>> listUser();
 

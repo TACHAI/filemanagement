@@ -104,7 +104,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             PrintWriter out = httpServletResponse.getWriter();
             Gson res = new Gson();
             Map<String, Object> map = new HashMap<>();
-            map.put("status",1);
+            map.put("status",100);
             map.put("msg","token验证失效");
             out.append(res.toJson(map));
             out.flush();

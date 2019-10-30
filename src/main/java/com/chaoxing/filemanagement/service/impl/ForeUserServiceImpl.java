@@ -3,10 +3,13 @@ package com.chaoxing.filemanagement.service.impl;
 import com.chaoxing.filemanagement.common.ResponseString;
 import com.chaoxing.filemanagement.common.ServerResponse;
 import com.chaoxing.filemanagement.dao.DeptMapper;
+import com.chaoxing.filemanagement.dao.ForeUserMapper;
 import com.chaoxing.filemanagement.dao.PermissionsMapper;
 import com.chaoxing.filemanagement.dao.UserMapper;
+import com.chaoxing.filemanagement.po.ForeUser;
 import com.chaoxing.filemanagement.po.Permissions;
 import com.chaoxing.filemanagement.po.User;
+import com.chaoxing.filemanagement.service.ForeUserService;
 import com.chaoxing.filemanagement.service.UserService;
 import com.chaoxing.filemanagement.util.JWTUtil;
 import com.chaoxing.filemanagement.util.MD5Util;
@@ -25,21 +28,16 @@ import java.util.List;
  * gitHub https://github.com/TACHAI
  * Email tc1206966083@gmail.com
  */
-@Service("UserServiceImpl")
-public class UserServiceImpl implements UserService {
+@Service("ForeUserServiceImpl")
+public class ForeUserServiceImpl implements ForeUserService {
 
     @Autowired
-    private UserMapper userDao;
-    @Autowired
-    private PermissionsMapper permissionDao;
+    private ForeUserMapper userDao;
     @Autowired
     private DeptMapper deptDao;
 
-
-
-
     @Override
-    public ServerResponse<String> addUser(User user) {
+    public ServerResponse<String> addUser(ForeUser user) {
         int temp = userDao.selectByEmail(user.getEmail());
         if(temp>0){
             return ServerResponse.createByErrorMessage("该邮箱号已使用，新增失败");
@@ -59,27 +57,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServerResponse<String> deleteById(Integer id) {
-        User user = userDao.selectByPrimaryKey(id);
+        ForeUser user = userDao.selectByPrimaryKey(id);
         user.setIsDelete(ResponseString.IS_DELETE);
 
         return update(user);
     }
 
     @Override
-    public ServerResponse<String> updateUser(User user) {
+    public ServerResponse<String> updateUser(ForeUser user) {
         return update(user);
     }
 
     @Override
-    public ServerResponse<User> selectById(Integer id) {
-        User user = userDao.selectByPrimaryKey(id);
+    public ServerResponse<ForeUser> selectById(Integer id) {
+        ForeUser user = userDao.selectByPrimaryKey(id);
         return ServerResponse.createBySuccess(user,ResponseString.SELECT_SUCCESS);
     }
 
     @Override
     public ServerResponse<UserVO> login(String email, String password) {
         String pwd=MD5Util.MD5(password);
-        User user = userDao.login(email,pwd);
+        ForeUser user = userDao.login(email,pwd);
         if(user==null){
             return ServerResponse.createByErrorMessage("未找到该用户，用户名或密码错误");
         }
@@ -90,43 +88,22 @@ public class UserServiceImpl implements UserService {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user,userVO);
 
-        List<Permissions> list = permissionDao.selectByDeptId(user.getDeptId());
-        StringBuffer permission=new StringBuffer();
-        for(int i=0;i<list.size();i++){
-            permission.append(list.get(i).getPermission());
-        }
-        userVO.setPermission(permission.toString());
-
         userVO.setToken(token);
 
         return ServerResponse.createBySuccess(userVO,"登录成功");
     }
 
     @Override
-    public ServerResponse<List<User>> listUserByDeptId(Integer deptId) {
-        List<User> list = userDao.selectByDeptId(deptId);
+    public ServerResponse<List<ForeUser>> listUserByDeptId(Integer deptId) {
+        List<ForeUser> list = userDao.selectByDeptId(deptId);
         return ServerResponse.createBySuccess(list,ResponseString.SELECT_SUCCESS);
-    }
-
-    @Override
-    public UserVO selectUserVO(Integer id) {
-        User user = userDao.selectByPrimaryKey(id);
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user,userVO);
-        List<Permissions> list= permissionDao.selectByDeptId(user.getDeptId());
-        StringBuffer buffer = new StringBuffer();
-        for(int i=0;i<list.size();i++){
-            buffer.append(list.get(i).getPermission()).append(";");
-        }
-        userVO.setPermission(buffer.toString());
-        return userVO;
     }
 
     @Override
     public ServerResponse<List<UserVO>> listUser() {
 
 
-        List<User> list = userDao.listUser();
+        List<ForeUser> list = userDao.listUser();
         List<UserVO> userVOList = new ArrayList<>();
         list.forEach(e->{
             UserVO vo = new UserVO();
@@ -139,7 +116,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private ServerResponse<String> update(User user){
+
+    private ServerResponse<String> update(ForeUser user){
         int res = userDao.updateByPrimaryKeySelective(user);
         if(res>0){
             return ServerResponse.createBySuccessMessage(ResponseString.UPDATE_SUCCESS);

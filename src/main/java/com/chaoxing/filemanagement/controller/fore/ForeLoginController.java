@@ -1,9 +1,11 @@
-package com.chaoxing.filemanagement.controller;
+package com.chaoxing.filemanagement.controller.fore;
 
 import com.chaoxing.filemanagement.common.ServerResponse;
+import com.chaoxing.filemanagement.po.ForeUser;
 import com.chaoxing.filemanagement.po.User;
+import com.chaoxing.filemanagement.service.ForeUserService;
 import com.chaoxing.filemanagement.service.UserService;
-import com.chaoxing.filemanagement.util.JWTUtil;
+import com.chaoxing.filemanagement.vo.FileVO;
 import com.chaoxing.filemanagement.vo.PageVO;
 import com.chaoxing.filemanagement.vo.UserVO;
 import com.github.pagehelper.Page;
@@ -13,23 +15,23 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * Create by tachai on 2019-10-22 13:45
+ * Create by tachai on 2019-10-30 16:32
  * gitHub https://github.com/TACHAI
  * Email tc1206966083@gmail.com
  */
 @RestController
-@RequestMapping("/user/")
-@Api(value = "用户模块")
-public class LoginController {
+@RequestMapping("/foreuser/")
+@Api(value = "前端用户模块")
+public class ForeLoginController {
+
     @Autowired
-    private UserService userService;
+    private ForeUserService userService;
 
 
     @GetMapping("selectList")
@@ -54,6 +56,7 @@ public class LoginController {
     }
 
 
+
     @PostMapping("login")
     public ServerResponse<UserVO> login(String email, String password){
         return userService.login(email,password);
@@ -61,7 +64,7 @@ public class LoginController {
 
     @RequiresAuthentication
     @PostMapping("addUser")
-    public ServerResponse<String> addUser(User user){
+    public ServerResponse<String> addUser(ForeUser user){
         return userService.addUser(user);
     }
 
@@ -73,12 +76,12 @@ public class LoginController {
 
     @RequiresAuthentication
     @PostMapping("updateUser")
-    public ServerResponse<String> update(User user){
+    public ServerResponse<String> update(ForeUser user){
         return userService.updateUser(user);
     }
     // todo 用户的数量
     @GetMapping
-    public ServerResponse<List<User>> list(){
+    public ServerResponse<List<ForeUser>> list(){
         return null;
     }
 
@@ -93,5 +96,4 @@ public class LoginController {
         subject.logout();
         return ServerResponse.createBySuccessMessage("退出成功");
     }
-
 }
