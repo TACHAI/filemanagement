@@ -27,7 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/back/dept/")
-@Api(value = "后台文件查询")
+@Api(value = "后台部门")
 public class DeptController {
 
     @Autowired
