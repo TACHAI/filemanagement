@@ -61,14 +61,14 @@ public class LoginController {
 
     @RequiresAuthentication
     @GetMapping("exit")
-    public ServerResponse<String>exit(HttpServletRequest request){
+    public String exit(HttpServletRequest request){
         /*String token = request.getHeader("Authorization");
         if(token!=null){
             String userName = JWTUtil.getUsername(token);
         }*/
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return ServerResponse.createBySuccessMessage("退出成功");
+        return "redirect:/admin/index.html";
 
     }
 
